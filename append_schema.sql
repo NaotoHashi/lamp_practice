@@ -10,7 +10,7 @@
 create table purchase_history(
   注文番号 int auto_increment,
   購入日時 datetime,
-  合計金額 int
+  use_id int
   );
 )
 
@@ -27,8 +27,7 @@ create table purchase_history(
 
 create table purchase_details(
   注文番号 int,
-  商品名 varchar(100),
-  価格 int(11),
-  購入数 int,
-  小計 int
+  item_id int,
+  price int,
+  購入数 int
 );
