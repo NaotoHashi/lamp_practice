@@ -6,11 +6,6 @@
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'cart.css'); ?>">
 </head>
 <body>
-  <?php 
-  sesstion_start();
-  get_csrf_token();
-  header('X-FRAME-OPTIONS: DENY');
-  ?>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
   <h1>カート</h1>
   <div class="container">
