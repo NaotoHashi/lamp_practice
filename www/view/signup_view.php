@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'signup.css'); ?>">
 </head>
 <body>
+  <?php 
+  get_csrf_token();
+  header('X-FRAME-OPTIONS: DENY');
+  ?>
   <?php include VIEW_PATH . 'templates/header.php'; ?>
   <div class="container">
     <h1>ユーザー登録</h1>
@@ -13,6 +17,7 @@
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
     <form method="post" action="signup_process.php" class="signup_form mx-auto">
+      <input type='hidden' name='token' value='<?php print substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 20) ?>'>
       <div class="form-group">
         <label for="name">名前: </label>
         <input type="text" name="name" id="name" class="form-control">
