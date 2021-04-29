@@ -8,8 +8,8 @@
 --   ログインユーザーの判別も必要（sessionで判断）
 
 create table purchase_history(
-  注文番号 int auto_increment,
-  購入日時 datetime,
+  order_number int auto_increment,
+  purchase_date datetime,
   use_id int
   );
 )
@@ -26,8 +26,8 @@ create table purchase_history(
 --   ※画面上部には該当の注文番号、購入日時、合計金額を表示
 
 create table purchase_details(
-  注文番号 int,
+  order_number int,
   item_id int,
   price int,
-  購入数 int
+  purchase_amount int
 );
