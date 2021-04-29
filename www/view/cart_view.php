@@ -7,6 +7,7 @@
 </head>
 <body>
   <?php 
+  sesstion_start();
   get_csrf_token();
   header('X-FRAME-OPTIONS: DENY');
   ?>
@@ -36,8 +37,8 @@
             <td><?php print(number_format($cart['price'])); ?>円</td>
             <td>
               <form method="post" action="cart_change_amount.php">
-                <input type='hidden' name='token' value='<?php print substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 20) ?>'>
-                <input type="number" name="amount" value="<?php print(htmlspecialchars($cart['amount'], ENT_QUOTES, 'UTF-8')); ?>">
+                <input type='hidden' name='token' value='<?php print $token ?>'>
+                <input type="number" name="amount" value="<?php print htmlspecialchars($cart['amount'], ENT_QUOTES, 'UTF-8'); ?>">
                 個
                 <input type="submit" value="変更" class="btn btn-secondary">
                 <input type="hidden" name="cart_id" value="<?php print(htmlspecialchars($cart['cart_id'], ENT_QUOTES, 'UTF-8')); ?>">
@@ -47,7 +48,7 @@
             <td>
 
               <form method="post" action="cart_delete_cart.php">
-                <input type='hidden' name='token' value='<?php print substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 20) ?>'>
+                <input type='hidden' name='token' value='<?php print $token ?>'>
                 <input type="submit" value="削除" class="btn btn-danger delete">
                 <input type="hidden" name="cart_id" value="<?php print($cart['cart_id']); ?>">
               </form>
@@ -59,7 +60,7 @@
       </table>
       <p class="text-right">合計金額: <?php print htmlspecialchars(number_format($total_price), ENT_QUOTES, 'UTF-8'); ?>円</p>
       <form method="post" action="finish.php">
-        <input type='hidden' name='token' value='<?php print substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 20) ?>'>
+        <input type='hidden' name='token' value='<?php print $token ?>'>
         <input class="btn btn-block btn-primary" type="submit" value="購入する">
       </form>
     <?php } else { ?>

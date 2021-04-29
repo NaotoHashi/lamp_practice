@@ -7,6 +7,7 @@
 </head>
 <body>
   <?php 
+  session_start();
   get_csrf_token();
   header('X-FRAME-OPTIONS: DENY');
   ?>
@@ -17,7 +18,7 @@
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
     <form method="post" action="signup_process.php" class="signup_form mx-auto">
-      <input type='hidden' name='token' value='<?php print substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 20) ?>'>
+      <input type='hidden' name='token' value='<?php print $token ?>'>
       <div class="form-group">
         <label for="name">名前: </label>
         <input type="text" name="name" id="name" class="form-control">
