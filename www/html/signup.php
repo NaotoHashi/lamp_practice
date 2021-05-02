@@ -3,7 +3,7 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 
 session_start();
-get_csrf_token();
+$token = get_csrf_token();
 header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === true){
@@ -11,6 +11,3 @@ if(is_logined() === true){
 }
 
 include_once VIEW_PATH . 'signup_view.php';
-
-
-
