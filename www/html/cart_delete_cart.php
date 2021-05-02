@@ -6,7 +6,6 @@ require_once MODEL_PATH . 'item.php';
 require_once MODEL_PATH . 'cart.php';
 
 session_start();
-get_csrf_token();
 header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === false){
@@ -17,11 +16,16 @@ $db = get_db_connect();
 $user = get_login_user($db);
 
 $cart_id = get_post('cart_id');
+$get_token = get_post('token');
 
-if(delete_cart($db, $cart_id)){
-  set_message('カートを削除しました。');
-} else {
-  set_error('カートの削除に失敗しました。');
+if(is_valid_token($get_token) === true){
+  if(delete_cart($db, $cart_id)){
+    set_message('カートを削除しました。');
+  } else {
+    set_error('カートの削除に失敗しました。');
+  }
+}else{
+  set_error('不正なリクエストです。');
 }
 
 redirect_to(CART_URL);

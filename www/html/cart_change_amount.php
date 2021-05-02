@@ -6,7 +6,6 @@ require_once MODEL_PATH . 'item.php';
 require_once MODEL_PATH . 'cart.php';
 
 session_start();
-get_csrf_token();
 header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === false){
@@ -18,11 +17,16 @@ $user = get_login_user($db);
 
 $cart_id = get_post('cart_id');
 $amount = get_post('amount');
+$get_token = get_post('token');
 
-if(update_cart_amount($db, $cart_id, $amount) && get_post('token') === get_session('token')){
-  set_message('購入数を更新しました。');
-} else {
-  set_error('購入数の更新に失敗しました。');
+if(is_valid_token($get_token) === true){
+  if(update_cart_amount($db, $cart_id, $amount)){
+    set_message('購入数を更新しました。');
+  } else {
+    set_error('購入数の更新に失敗しました。');
+  }
+}else{
+  set_error('不正なリクエストです。');
 }
 
 redirect_to(CART_URL);

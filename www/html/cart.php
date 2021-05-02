@@ -6,7 +6,7 @@ require_once MODEL_PATH . 'item.php';
 require_once MODEL_PATH . 'cart.php';
 
 session_start();
-get_csrf_token();
+$token = get_csrf_token();
 header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === false){
