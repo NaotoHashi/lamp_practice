@@ -3,7 +3,6 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 
 session_start();
-get_csrf_token();
 header('X-FRAME-OPTIONS: DENY');
 
 $_SESSION = array();
