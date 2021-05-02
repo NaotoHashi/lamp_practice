@@ -3,6 +3,8 @@ require_once '../conf/const.php';
 require_once MODEL_PATH . 'functions.php';
 
 session_start();
+header('X-FRAME-OPTIONS: DENY');
+
 $_SESSION = array();
 $params = session_get_cookie_params();
 setcookie(session_name(), '', time() - 42000,

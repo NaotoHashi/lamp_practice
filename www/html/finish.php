@@ -6,6 +6,7 @@ require_once MODEL_PATH . 'item.php';
 require_once MODEL_PATH . 'cart.php';
 
 session_start();
+header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
@@ -15,12 +16,20 @@ $db = get_db_connect();
 $user = get_login_user($db);
 
 $carts = get_user_carts($db, $user['user_id']);
+$get_token = get_post('token');
 
-if(purchase_carts($db, $carts) === false){
-  set_error('商品が購入できませんでした。');
-  redirect_to(CART_URL);
-} 
+if(is_valid_token($get_token) === true){
+  if(purchase_carts($db, $carts) === false){
+    set_error('商品が購入できませんでした。');
+    redirect_to(CART_URL);
+  } 
+}else{
+  set_error('不正なリクエストです。');
+}
 
 $total_price = sum_carts($carts);
+
+// 購入履歴のテーブルに書き込むコントローラーが必要
+
 
 include_once '../view/finish_view.php';

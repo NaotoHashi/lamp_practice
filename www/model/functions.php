@@ -102,8 +102,6 @@ function delete_image($filename){
   
 }
 
-
-
 function is_valid_length($string, $minimum_length, $maximum_length = PHP_INT_MAX){
   $length = mb_strlen($string);
   return ($minimum_length <= $length) && ($length <= $maximum_length);
@@ -121,7 +119,6 @@ function is_valid_format($string, $format){
   return preg_match($format, $string) === 1;
 }
 
-
 function is_valid_upload_image($image){
   if(is_uploaded_file($image['tmp_name']) === false){
     set_error('ファイル形式が不正です。');
@@ -137,4 +134,17 @@ function is_valid_upload_image($image){
 
 function h($str){
   return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
+}
+
+function get_csrf_token(){
+  $token = substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 20);
+  set_session('token', $token);
+  return $token;
+}
+
+function is_valid_token($token){
+  if($token === '') {
+    return false;
+  }
+  return $token === get_session('token');
 }

@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'admin.css'); ?>">
 </head>
 <body>
+  
   <?php 
   include VIEW_PATH . 'templates/header_logined.php'; 
   ?>
@@ -20,6 +21,7 @@
       action="admin_insert_item.php" 
       enctype="multipart/form-data"
       class="add_item_form col-md-6">
+      <input type='hidden' name='token' value='<?php print $token; ?>'>
       <div class="form-group">
         <label for="name">名前: </label>
         <input class="form-control" type="text" name="name" id="name">
@@ -63,17 +65,18 @@
           <?php foreach($items as $item){ ?>
           <tr class="<?php print(is_open($item) ? '' : 'close_item'); ?>">
             <td><img src="<?php print(IMAGE_PATH . $item['image']);?>" class="item_image"></td>
-            <td><?php print($item['name']); ?></td>
-            <td><?php print(number_format($item['price'])); ?>円</td>
+            <td><?php print(htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8')); ?></td>
+            <td><?php print number_format($item['price']) ?>円</td>
             <td>
               <form method="post" action="admin_change_stock.php">
+                <input type='hidden' name='token' value='<?php print $token; ?>'>
                 <div class="form-group">
                   <!-- sqlインジェクション確認のためあえてtext -->
-                  <input  type="text" name="stock" value="<?php print($item['stock']); ?>">
+                  <input type="text" name="stock" value="<?php print(htmlspecialchars($item['stock'], ENT_QUOTES, 'UTF-8')); ?>">
                   個
                 </div>
                 <input type="submit" value="変更" class="btn btn-secondary">
-                <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
+                <input type="hidden" name="item_id" value="<?php print(htmlspecialchars($item['item_id'], ENT_QUOTES, 'UTF-8')); ?>">
               </form>
             </td>
             <td>
@@ -87,11 +90,13 @@
                   <input type="hidden" name="changes_to" value="open">
                 <?php } ?>
                 <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
+                <input type="hidden" name="token" value="<?php print $token; ?>">
               </form>
 
               <form method="post" action="admin_delete_item.php">
                 <input type="submit" value="削除" class="btn btn-danger delete">
                 <input type="hidden" name="item_id" value="<?php print($item['item_id']); ?>">
+                <input type="hidden" name="token" value="<?php print $token; ?>">
               </form>
 
             </td>

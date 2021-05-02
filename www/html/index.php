@@ -5,6 +5,8 @@ require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'item.php';
 
 session_start();
+$token = get_csrf_token();
+header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
