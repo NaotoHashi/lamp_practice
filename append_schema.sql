@@ -10,7 +10,8 @@
 create table purchase_history(
   order_number int auto_increment,
   purchase_date datetime,
-  use_id int
+  user_id int,
+  primary key(order_number)
   );
 )
 

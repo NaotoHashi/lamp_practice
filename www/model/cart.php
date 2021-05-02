@@ -94,7 +94,7 @@ function delete_cart($db, $cart_id){
     DELETE FROM
       carts
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ;
     LIMIT 1
   ";
 
