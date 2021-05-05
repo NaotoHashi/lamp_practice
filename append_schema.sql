@@ -7,13 +7,13 @@
 --   合計金額 $total_priceを取得
 --   ログインユーザーの判別も必要（sessionで判断）
 
-create table purchase_history(
+create table purchase_histories(
   order_number int auto_increment,
   purchase_date datetime,
   user_id int,
   primary key(order_number)
-  );
-)
+);
+
 
 -- -- 購入明細画面
 -- テーブル名 purchase_details
