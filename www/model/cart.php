@@ -156,32 +156,3 @@ function validate_cart_purchase($carts){
   return true;
 }
 
-function purchase_history($db, $user_id){
-  $date = date("Y-m-d H:i:s");
-  $sql = "
-    INSERT INTO
-      purchase_histories(
-        purchase_date,
-        user_id
-      )
-    VALUES(?, ?)
-  ";
-
-  return execute_query($db, $sql, array($date, $user_id));
-}
-
-function purchase_detail($db, $order_number, $item_id, $price, $amount){
-  
-  $sql = "
-    INSERT INTO
-      purchase_details(
-        order_number,
-        item_id,
-        price,
-        purchase_amount
-      )
-    VALUES(?, ?, ?, ?)
-  ";
-
-  return execute_query($db, $sql, array($order_number, $item_id, $price, $amount));
-}
