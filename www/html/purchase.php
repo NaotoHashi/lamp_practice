@@ -17,6 +17,10 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
-$histories = get_user_purchase_history($db, $user['user_id']);
+if(is_admin($user) === true){
+  $histories = get_admin_purchase_history($db);
+}else{
+  $histories = get_user_purchase_history($db, $user['user_id']);
+}
 
 include_once VIEW_PATH . '/purchase_history_view.php';

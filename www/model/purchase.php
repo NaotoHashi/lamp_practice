@@ -64,7 +64,33 @@ function purchase_detail($db, $order_number, $item_id, $price, $amount){
 //   return execute_query($db, $sql, array($user_id));
 // }
 
-// 購入履歴の表示用
+// 購入履歴の表示用(管理者)
+function get_admin_purchase_history($db){
+  $sql = "
+  SELECT
+	  purchase_histories.order_number,
+    users.name,
+    purchase_date,
+    SUM(purchase_details.price * purchase_details.purchase_amount) as total
+FROM
+	purchase_histories
+INNER JOIN
+	purchase_details
+ON
+	purchase_histories.order_number = purchase_details.order_number
+INNER JOIN
+  users
+ON
+  purchase_histories.user_id = users.user_id
+GROUP BY
+	purchase_histories.order_number
+ORDER BY
+  purchase_date desc
+  ";
+
+  return fetch_all_query($db, $sql);
+}
+// 購入履歴の表示用(一般)
 function get_user_purchase_history($db, $user_id){
   $sql = "
   SELECT
@@ -81,6 +107,8 @@ WHERE
 	purchase_histories.user_id = ?
 GROUP BY
 	purchase_histories.order_number
+ORDER BY
+  purchase_date desc
   ";
 
   return fetch_all_query($db, $sql, array($user_id));
