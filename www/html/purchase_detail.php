@@ -7,7 +7,6 @@ require_once MODEL_PATH . 'cart.php';
 require_once MODEL_PATH . 'purchase.php';
 
 session_start();
-$token = get_csrf_token();
 header('X-FRAME-OPTIONS: DENY');
 
 if(is_logined() === false){
@@ -16,9 +15,9 @@ if(is_logined() === false){
 
 $db = get_db_connect();
 $user = get_login_user($db);
+$order_number = get_post('order_number');
 
-$carts = get_user_carts($db, $user['user_id']);
+$histories = get_select_purchase_history($db, $order_number);
+$details = get_select_purchase_detail($db, $order_number);
 
-$total_price = sum_carts($carts);
-
-include_once VIEW_PATH . 'cart_view.php';
+include_once VIEW_PATH . '/purchase_details_view.php';

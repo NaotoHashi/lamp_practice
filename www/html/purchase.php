@@ -17,8 +17,10 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
-$carts = get_user_carts($db, $user['user_id']);
+if(is_admin($user) === true){
+  $histories = get_admin_purchase_history($db);
+}else{
+  $histories = get_user_purchase_history($db, $user['user_id']);
+}
 
-$total_price = sum_carts($carts);
-
-include_once VIEW_PATH . 'cart_view.php';
+include_once VIEW_PATH . '/purchase_history_view.php';
