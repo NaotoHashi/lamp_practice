@@ -18,6 +18,5 @@ $db = get_db_connect();
 $user = get_login_user($db);
 
 $histories = get_user_purchase_history($db, $user['user_id']);
-$total_price = sum_histories($histories);
 
 include_once VIEW_PATH . '/purchase_history_view.php';

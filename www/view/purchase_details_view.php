@@ -15,6 +15,7 @@
     <table class="table table-bordered">
       <thead class="thead-light">
         <tr>
+          <th>注文番号</th>
           <th>注文日時</th>
           <th>合計金額</th>
         </tr>
@@ -22,8 +23,11 @@
       <tbody>
        
         <tr>
-          <td><?php print $select_history['purchase_date']; ?></td>
-          <td><?php print htmlspecialchars(number_format($total_price), ENT_QUOTES, 'UTF-8'); ?>円</td>
+          <?php foreach($histories as $history){ ?>
+          <td><?php print $history['order_number']; ?></td>
+          <td><?php print $history['purchase_date']; ?></td>
+          <td><?php print htmlspecialchars(number_format($history['total']), ENT_QUOTES, 'UTF-8'); ?>円</td>
+          <?php } ?>
         </tr>
         
       </tbody>
@@ -44,7 +48,7 @@
           <td><?php print htmlspecialchars($detail['name'], ENT_QUOTES, 'UTF-8'); ?></td>
           <td><?php print htmlspecialchars(number_format($detail['price']), ENT_QUOTES, 'UTF-8'); ?>円</td>
           <td><?php print htmlspecialchars(number_format($detail['purchase_amount']), ENT_QUOTES, 'UTF-8'); ?>個</td>
-          <td><?php print htmlspecialchars(number_format($subtotal_price), ENT_QUOTES, 'UTF-8'); ?>円</td>
+          <td><?php print htmlspecialchars(number_format($detail['subtotal']), ENT_QUOTES, 'UTF-8'); ?>円</td>
         </tr>
         <?php } ?>
       </tbody>

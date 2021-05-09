@@ -17,11 +17,7 @@ $db = get_db_connect();
 $user = get_login_user($db);
 $order_number = get_post('order_number');
 
-$histories = get_user_purchase_history($db, $user['user_id']);
-$select_history = get_select_purchase_history($db, $order_number);
-$total_price = sum_histories($histories);
-
-$details = get_user_purchase_detail($db, $order_number);
-$subtotal_price = sum_details($details);
+$histories = get_select_purchase_history($db, $order_number);
+$details = get_select_purchase_detail($db, $order_number);
 
 include_once VIEW_PATH . '/purchase_details_view.php';

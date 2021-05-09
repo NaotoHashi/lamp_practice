@@ -35,7 +35,10 @@ if(is_valid_token($get_token) === true){
     // 購入履歴の書き込み
     purchase_history($db, $user['user_id']);
     $order_number = $db -> lastInsertId();
-    purchase_detail($db, $order_number, $item_id, $price, $amount);
+    foreach($carts as $cart){
+      purchase_detail($db, $order_number, $cart['item_id'], $cart['price'], $cart['amount']);
+    }
+    // purchase_detail($db, $user['user_id']);
     // 購入が成功したら、cartsを空にする
     purchase_carts($db, $carts);
 
