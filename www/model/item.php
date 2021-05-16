@@ -5,6 +5,7 @@ require_once MODEL_PATH . 'db.php';
 // DB利用
 
 function get_item($db, $item_id){
+  
   $sql = "
     SELECT
       item_id, 
@@ -17,6 +18,8 @@ function get_item($db, $item_id){
       items
     WHERE
       item_id = ?
+    ORDER BY
+    {$order_by}
   ";
 
   return fetch_query($db, $sql, array($item_id));
@@ -36,10 +39,29 @@ function get_items($db, $is_open = false){
   ';
   if($is_open === true){
     $sql .= '
-      WHERE status = 1
+      WHERE
+        status = 1
     ';
   }
 
+  $get_sort = get_get('sort');
+  if($get_sort === '0'){
+    $sql .= '
+      ORDER BY
+        created desc
+    ';
+  }else if($get_sort === '1'){
+    $sql .= '
+      ORDER BY
+        price asc
+    ';
+  }else if($get_sort === '2'){
+    $sql .= '
+      ORDER BY
+        price desc
+    ';
+  }
+  
   return fetch_all_query($db, $sql);
 }
 

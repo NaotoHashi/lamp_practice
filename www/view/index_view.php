@@ -14,6 +14,15 @@
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
+    <form method='get' action="index.php?sort <?php print get_get('sort');?>">
+      <select name='sort'>
+        <option value='0'>新着順</option>
+        <option value='1'>価格の安い順</option>
+        <option value='2'>価格の高い順</option>
+      </select>
+      <input type='submit' value='並べ替え'>
+    </form>
+
     <div class="card-deck">
       <div class="row">
       <?php foreach($items as $item){ ?>
