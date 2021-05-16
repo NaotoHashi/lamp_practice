@@ -16,9 +16,6 @@
       <thead class="thead-light">
         <tr>
           <th>注文番号</th>
-          <?php if(is_admin($user) === true) { ?>
-            <th>注文者</th>
-          <?php } ?>
           <th>注文日時</th>
           <th>合計金額</th>
           <th>購入詳細</th>
@@ -28,15 +25,13 @@
         <?php foreach($histories as $history){ ?>
         <tr>
           <td><?php print $history['order_number']; ?></td>
-          <?php if(is_admin($user) === true) { ?>
-            <td><?php print $history['name']; ?></td>
-          <?php } ?>
           <td><?php print $history['purchase_date']; ?></td>
           <td><?php print htmlspecialchars(number_format($history['total']), ENT_QUOTES, 'UTF-8'); ?>円</td>
           <td>
             <form method='post' action='purchase_detail.php'>
               <input type='hidden' name='token' value='<?php print $token; ?>'>
               <input type='hidden' name='order_number' value="<?php print $history['order_number']; ?>">
+              <input type='hidden' name='user_id' value="<?php print $history['user_id']; ?>">
               <input class='btn btn-block btn-primary' type='submit' value='詳細画面'>
             </form>
           </td>
